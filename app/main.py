@@ -15,16 +15,10 @@ TELEGRAM_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    data = request.get_json(silent=True)
-
-    if not data:
-        return {"error": "No JSON body received"}, 400
-
-    # TradingView معمولاً alert_message می فرستد
-    message = data.get("alert_message") or data.get("message") or str(data)
+    message = request.data.decode("utf-8")
 
     if not message:
-        return {"error": "Message not found in payload"}, 400
+        return {"error": "Message not found"}, 400
 
     payload = {
         "chat_id": CHAT_ID,
@@ -49,4 +43,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=80)
