@@ -37,10 +37,5 @@ def webhook():
         return {"error": f"Telegram Send Failed: {str(e)}"}, 500
 
 
-@app.route("/", methods=["GET"])
-def home():
-    return {"status": "running"}, 200
-
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
