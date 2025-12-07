@@ -97,10 +97,10 @@ journalctl -u tradingview-alert-bot -n 50 --no-pager
 
 ## 🌐 پیکربندی Nginx
 
-فایل زیر را بسازید:
+فایل کانفیگ را بسازید:
 
 ```
-/etc/nginx/sites-available/tradingview-alert-bot.conf
+sudo nano /etc/nginx/sites-available/tradingview-alert-bot.conf
 ```
 
 محتوا:
@@ -110,24 +110,20 @@ server {
     listen 80;
     server_name _;
 
-    location /webhook {
-        # Allowed TradingView IPs
-        allow 52.89.214.238;
-        allow 34.212.75.30;
-        allow 54.218.53.128;
-        allow 52.32.178.7;
-        deny all;
+    # Allowed TradingView IPs
+    allow 52.89.214.238;
+    allow 34.212.75.30;
+    allow 54.218.53.128;
+    allow 52.32.178.7;
+    deny all;
 
+    location /webhook {
         proxy_pass http://127.0.0.1:8000;
 
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location / {
-        proxy_pass http://127.0.0.1:8000;
     }
 }
 ```
