@@ -73,6 +73,13 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
+تنظیم مالکیت پوشه پروژه:
+برای اینکه سرویس بدون خطا اجرا شود و کاربر www-data به فایل‌های پروژه دسترسی داشته باشد، این دستور را اجرا کنید:
+
+```bash
+sudo chown -R www-data:www-data /opt/tradingview-alert-bot
+```
+
 فعالسازی:
 
 ```bash
@@ -96,12 +103,13 @@ journalctl -u tradingview-alert-bot -n 50 --no-pager
 sudo nano /etc/nginx/sites-available/tradingview-alert-bot.conf
 ```
 
-محتوا:
+محتوا:  
+مقدار SERVER_IP را برابر با ip سرور خود قرار دهید.
 
 ```nginx
 server {
     listen 80;
-    server_name _;
+    server_name SERVER_IP;
 
     # Allowed TradingView IPs
     allow 52.89.214.238;
@@ -133,9 +141,10 @@ sudo systemctl restart nginx
 ## 🔐 تنظیمات امنیتی UFW
 
 ```bash
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow 80/tcp
+sudo ufw allow from 52.89.214.238 to any port 80 proto tcp
+sudo ufw allow from 34.212.75.30 to any port 80 proto tcp
+sudo ufw allow from 54.218.53.128 to any port 80 proto tcp
+sudo ufw allow from 52.32.178.7 to any port 80 proto tcp
 sudo ufw enable
 sudo ufw reload
 ```
