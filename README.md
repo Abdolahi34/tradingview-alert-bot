@@ -32,14 +32,7 @@ sudo apt update
 sudo apt install nginx -y
 ````
 
-### 2. فعال‌سازی پورت HTTP
-
-```bash
-sudo ufw allow 80/tcp
-sudo ufw enable
-```
-
-### 3. ساخت virtualenv و نصب وابستگی‌ها
+### 2. ساخت virtualenv و نصب وابستگی‌ها
 
 ```bash
 python3 -m venv venv
@@ -47,7 +40,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. تست اجرای Gunicorn
+### 3. تست اجرای Gunicorn
 
 ```bash
 /opt/tradingview-alert-bot/venv/bin/gunicorn --bind 127.0.0.1:8000 wsgi:app
@@ -55,10 +48,10 @@ pip install -r requirements.txt
 
 ## 🛠 ساخت سرویس systemd
 
-فایل زیر را بسازید:
+فایل service را بسازید:
 
-```
-/etc/systemd/system/tradingview-alert-bot.service
+```bash
+sudo nano /etc/systemd/system/tradingview-alert-bot.service
 ```
 
 محتوا:
@@ -143,6 +136,7 @@ sudo systemctl restart nginx
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 80/tcp
+sudo ufw enable
 sudo ufw reload
 ```
 
