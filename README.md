@@ -66,7 +66,7 @@ User=www-data
 Group=www-data
 WorkingDirectory=/opt/tradingview-alert-bot
 Environment="PATH=/opt/tradingview-alert-bot/venv/bin"
-ExecStart=/opt/tradingview-alert-bot/venv/bin/gunicorn --workers 1 --bind 127.0.0.1:8000 wsgi:app
+ExecStart=/opt/tradingview-alert-bot/venv/bin/gunicorn --workers 1 --worker-class gthread --threads 4 --bind 127.0.0.1:8000 wsgi:app
 Restart=always
 
 [Install]
