@@ -92,7 +92,7 @@ sudo systemctl status tradingview-alert-bot
 مشاهده لاگ‌ها:
 
 ```bash
-journalctl -u tradingview-alert-bot -n 50 --no-pager
+sudo journalctl -u tradingview-alert-bot -n 50 --no-pager
 ```
 
 ## 🌐 پیکربندی Nginx
@@ -147,6 +147,7 @@ sudo ufw allow from 54.218.53.128 to any port 80 proto tcp
 sudo ufw allow from 52.32.178.7 to any port 80 proto tcp
 sudo ufw enable
 sudo ufw reload
+sudo ufw status
 ```
 
 (نیازی به باز کردن پورت 8000 نیست.)
